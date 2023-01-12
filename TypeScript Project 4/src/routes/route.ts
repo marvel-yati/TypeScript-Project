@@ -1,13 +1,24 @@
-import express,{Request,Response} from 'express'
-const router = express.Router()
-import {homeDetails} from '../controllers/userController'
+import  {Router}  from "express"
+import urlController from "../controllers/url.controller";
+import { Request,Response } from "express";
 
-router.get('/home',homeDetails)
+class urlRouter {
+    public router: Router;
+  
+    constructor() {
+      this.router = Router();
+       this.routes();
+    }
+    private routes(): void {
 
-router.get('/about',(req:Request,res:Response) => {
-    res.json({
-        message: "About Page"
+    this.router.post("/originalUrl", urlController.allUrl)
+    this.router.get("/:urlCode",urlController.getUrl)
+    this.router.all("*",(req:Request,res:Response) => {
+        res.status(400).send({status:false, message: "Invalid Request"})
     })
-})
-
-export {router}
+}
+  
+  
+  }
+  
+  export default new urlRouter().router;

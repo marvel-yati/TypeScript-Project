@@ -1,0 +1,1 @@
+//code to check prime number
